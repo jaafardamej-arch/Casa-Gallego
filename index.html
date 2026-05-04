@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Gallego | El Mejor Pescado de Empuriabrava</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terracota: '#c0522a',
+                        ocre: '#e8a838',
+                        crema: '#faf3e0',
+                        burdeos: '#7a2233',
+                        blancocalido: '#fffbf5',
+                    },
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #fffbf5; color: #7a2233; }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(122, 34, 51, 0.6), rgba(192, 82, 42, 0.5)), url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .reveal-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-scrolled {
+            background-color: #fffbf5;
+            box-shadow: 0 4px 6px -1px rgba(122, 34, 51, 0.1);
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+        
+        .nav-scrolled .nav-link, .nav-scrolled .logo-text { color: #7a2233; }
+
+        /* Estilos del Chatbot */
+        #ai-chat-window {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 340px;
+            height: 550px;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
+            border: 1px solid #e8a838;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: #fffbf5;
+            transition: all 0.3s ease;
+        }
+
+        #ai-chat-window.active {
+            display: flex;
+        }
+
+        #chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        #chat-messages::-webkit-scrollbar-thumb {
+            background: #e8a838;
+            border-radius: 10px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #7a2233;
+            border-radius: 50%;
+            animation: typing 1s infinite ease-in-out;
+        }
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-burdeos">
+
+    <!-- Navegación -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 py-6 text-blancocalido transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="logo-text font-serif text-lg md:text-xl font-bold tracking-tighter drop-shadow-md uppercase">Casa Gallego</span>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#inicio" class="nav-link font-semibold hover:text-ocre transition-colors drop-shadow-sm uppercase tracking-wide text-[10px]">Inicio</a>
+                    <a href="#sobre-nosotros" class="nav-link font-semibold hover:text-ocre transition-colors drop-shadow-sm uppercase tracking-wide text-[10px]">Esencia</a>
+                    <a href="#carta" class="nav-link font-semibold hover:text-ocre transition-colors drop-shadow-sm uppercase tracking-wide text-[10px]">La Carta</a>
+                    <a href="#contacto" class="nav-link font-semibold hover:text-ocre transition-colors drop-shadow-sm uppercase tracking-wide text-[10px]">Ubicación</a>
+                    
+                    <a href="tel:+34972454647" class="bg-ocre hover:bg-terracota text-blancocalido px-4 py-2 rounded-full font-bold transition-all shadow-lg uppercase tracking-wide text-[10px]">Reservar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header id="inicio" class="hero-bg h-screen flex items-center justify-center text-center">
+        <div class="px-4 max-w-4xl z-10 reveal-hidden">
+            <h2 class="text-ocre font-serif text-xl italic mb-2">Pescado con alma, cocina con fundamento</h2>
+            <h1 class="text-5xl md:text-8xl font-serif font-bold text-blancocalido mb-6 drop-shadow-lg leading-tight uppercase">Casa Gallego</h1>
+            <p class="text-lg md:text-2xl text-blancocalido font-light mb-10 drop-shadow-md max-w-2xl mx-auto">
+                El frescor del mar de Roses directo a tu paladar en el corazón de Empuriabrava.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#carta" class="bg-terracota hover:bg-burdeos text-blancocalido px-8 py-3 rounded-full font-bold transition-all shadow-xl uppercase tracking-widest text-xs">Explorar Carta</a>
+                <a href="#contacto" class="bg-transparent border border-blancocalido text-blancocalido hover:bg-blancocalido hover:text-burdeos px-8 py-3 rounded-full font-bold transition-all uppercase tracking-widest text-xs">Visítanos</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sobre Nosotros -->
+    <section id="sobre-nosotros" class="py-24 bg-blancocalido">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2 reveal-hidden">
+                <img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mar artesanal" class="rounded-xl shadow-2xl hover:scale-105 transition-all duration-700">
+            </div>
+            <div class="lg:w-1/2 reveal-hidden">
+                <h4 class="text-terracota font-bold uppercase tracking-widest text-xs mb-2">Nuestra Esencia</h4>
+                <h2 class="text-3xl font-serif font-bold text-burdeos mb-6 uppercase">Del barco a la mesa</h2>
+                <div class="text-sm md:text-base text-burdeos/80 space-y-4 font-light">
+                    <p>"Cocinar es un acto de amor que empieza en la lonja". Aquí hacemos las cosas con fundamento y mucho mimo.</p>
+                    <p>Compramos nuestro pescado y marisco exclusivamente a una gran empresa de Roses. Ellos seleccionan cuidadosamente cada pieza para que llegue lo más fresco posible a tu paladar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Carta -->
+    <section id="carta" class="py-24 bg-crema">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-hidden">
+                <h2 class="text-4xl font-serif font-bold text-burdeos uppercase tracking-tighter">Nuestra Selección</h2>
+                <div class="w-12 h-0.5 bg-ocre mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-12">
+                <!-- Mariscos y Entrantes -->
+                <div class="bg-blancocalido p-8 shadow-sm reveal-hidden border border-crema rounded-lg">
+                    <h3 class="text-2xl font-serif font-bold text-burdeos mb-8 border-b border-ocre/20 pb-2 flex items-center uppercase">
+                        <span class="mr-2">🐙</span> Mariscos y Entrantes
+                    </h3>
+                    <ul class="space-y-6 text-sm">
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Pulpo a la Gallega</p><p class="text-xs text-burdeos/60 italic">Con patata y pimentón de la vera</p></div>
+                            <span class="font-bold text-terracota">24,50€</span>
+                        </li>
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Gambas de Palamós</p><p class="text-xs text-burdeos/60 italic">Fresco de Roses, a la plancha</p></div>
+                            <span class="font-bold text-terracota">28,00€</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pescados -->
+                <div class="bg-blancocalido p-8 shadow-sm reveal-hidden border border-crema rounded-lg">
+                    <h3 class="text-2xl font-serif font-bold text-burdeos mb-8 border-b border-ocre/20 pb-2 flex items-center uppercase">
+                        <span class="mr-2">🐟</span> Pescados y Arroces
+                    </h3>
+                    <ul class="space-y-6 text-sm">
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Lubina a la Sal (2 pers.)</p><p class="text-xs text-burdeos/60 italic">Selección diaria de Roses</p></div>
+                            <span class="font-bold text-terracota">52,00€</span>
+                        </li>
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Arroz Caldoso de Bogavante</p><p class="text-xs text-burdeos/60 italic">Sabor a mar puro (mínimo 2 pers.)</p></div>
+                            <span class="font-bold text-terracota">24,00€/p</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- La Bodega -->
+                <div class="bg-blancocalido p-8 shadow-sm reveal-hidden border border-crema rounded-lg">
+                    <h3 class="text-2xl font-serif font-bold text-burdeos mb-8 border-b border-ocre/20 pb-2 flex items-center uppercase">
+                        <span class="mr-2">🍷</span> Nuestra Bodega
+                    </h3>
+                    <ul class="space-y-6 text-sm">
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Albariño Martín Códax</p><p class="text-xs text-burdeos/60 italic">D.O. Rías Baixas</p></div>
+                            <span class="font-bold text-terracota">22,00€</span>
+                        </li>
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Ramón Bilbao Ed. Limitada</p><p class="text-xs text-burdeos/60 italic">D.O. Ca. Rioja</p></div>
+                            <span class="font-bold text-terracota">26,00€</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Postres -->
+                <div class="bg-blancocalido p-8 shadow-sm reveal-hidden border border-crema rounded-lg">
+                    <h3 class="text-2xl font-serif font-bold text-burdeos mb-8 border-b border-ocre/20 pb-2 flex items-center uppercase">
+                        <span class="mr-2">🍰</span> Dulce Final
+                    </h3>
+                    <ul class="space-y-6 text-sm">
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Tarta de Santiago</p><p class="text-xs text-burdeos/60 italic">Tradición gallega</p></div>
+                            <span class="font-bold text-terracota">7,50€</span>
+                        </li>
+                        <li class="flex justify-between border-b border-crema pb-2">
+                            <div><p class="font-bold">Crema Catalana</p><p class="text-xs text-burdeos/60 italic">Quemada al momento</p></div>
+                            <span class="font-bold text-terracota">6,00€</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHATBOT POÉTICO -->
+    <div id="ai-chat-window" class="font-sans">
+        <div class="bg-burdeos p-4 flex justify-between items-center shrink-0 border-b border-ocre/30">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-ocre flex items-center justify-center text-lg shadow-inner">👨‍🍳</div>
+                <div>
+                    <h4 class="text-blancocalido font-bold text-sm tracking-tight">El Anfitrión Gallego</h4>
+                    <span class="text-[9px] text-ocre uppercase tracking-[0.2em]">Tradición Viva</span>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-blancocalido/50 hover:text-blancocalido transition-all text-xl">&times;</button>
+        </div>
+        
+        <div id="chat-messages" class="flex-grow overflow-y-auto p-4 space-y-4 bg-crema/20">
+            <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm text-[13px] border border-crema text-burdeos italic leading-relaxed">
+                "El mar nos regala sus joyas y nosotros les ponemos el alma". Bienvenida/o a Casa Gallego. ¿En qué puedo guiarte hoy?
+            </div>
+        </div>
+
+        <div id="typing-indicator" class="hidden px-4 py-2 flex gap-1">
+            <div class="typing-dot"></div>
+            <div class="typing-dot" style="animation-delay: 0.2s"></div>
+            <div class="typing-dot" style="animation-delay: 0.4s"></div>
+        </div>
+
+        <div class="p-3 bg-white border-t border-crema">
+            <div class="flex gap-2">
+                <input id="chat-input" type="text" placeholder="¿Cómo puedo reservar?..." class="flex-grow text-xs border border-crema rounded-lg px-3 py-2 focus:outline-none focus:border-ocre bg-crema/10 font-light">
+                <button onclick="handleSend()" class="bg-ocre text-white p-2 rounded-lg hover:bg-terracota transition-all shadow-md">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lanzador Chatbot -->
+    <button id="chat-trigger" onclick="toggleChat()" class="fixed bottom-6 right-6 z-[999] bg-burdeos text-ocre p-4 rounded-full shadow-2xl hover:scale-110 transition-all flex items-center gap-2 group">
+        <span class="hidden md:block text-[10px] font-bold uppercase tracking-widest ml-2 opacity-0 group-hover:opacity-100 transition-opacity">Conversar</span>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+    </button>
+
+    <!-- Contacto -->
+    <section id="contacto" class="py-24 bg-blancocalido">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-serif font-bold mb-8 uppercase tracking-tighter">Encuéntranos</h2>
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="reveal-hidden">
+                    <h4 class="font-bold text-ocre uppercase text-xs mb-2 tracking-widest">Ubicación</h4>
+                    <p class="text-sm font-light">Sector Club Náutico<br>Empuriabrava, Girona</p>
+                </div>
+                <div class="reveal-hidden">
+                    <h4 class="font-bold text-ocre uppercase text-xs mb-2 tracking-widest">Horarios</h4>
+                    <p class="text-sm font-light">Abierto cada día con ilusión<br>12:30 - 16:00 | 19:30 - 23:00</p>
+                </div>
+                <div class="reveal-hidden">
+                    <h4 class="font-bold text-ocre uppercase text-xs mb-2 tracking-widest">Contacto</h4>
+                    <p class="text-sm font-light italic">Llama al 972 45 46 47<br>@casagallegoempuriabrava</p>
+                </div>
+            </div>
+            <div class="h-96 w-full rounded-xl overflow-hidden shadow-2xl reveal-hidden border-4 border-white">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000.0!2d3.1205!3d42.2435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12ba620e6f6634a1%3A0x6b3068e1a17277a0!2sEmpuriabrava!5e0!3m2!1ses!4v1715000000000" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-burdeos text-ocre/60 py-12 text-center border-t border-ocre/20">
+        <p class="font-serif text-xl font-bold text-ocre tracking-widest uppercase">Casa Gallego</p>
+        <p class="text-[10px] mt-2 uppercase tracking-[0.4em] font-light">Empuriabrava • Pescado con Fundamento</p>
+    </footer>
+
+    <script>
+        const apiKey = ""; 
+        let chatOpen = false;
+
+        const INFO_RESTAURANTE = {
+            ubicacion: "Estamos en el Sector Club Náutico de Empuriabrava, donde el canal besa la tierra.",
+            horario: "Nuestro fuego está encendido cada día de 12:30 a 16:00 y de 19:30 a 23:00.",
+            reserva_frase: "Llama al 972 45 46 47 para reservar tu plaza",
+            instagram: "@casagallegoempuriabrava",
+            producto: "Nuestro mar nos llega desde Roses. Una gran empresa amiga selecciona lo mejor de la lonja para que el frescor sea poesía en tu paladar.",
+            carta: "Mariscos frescos, Arroces con alma como el de bogavante, y pescados a la sal. Vinos Albariños y Riojas para brindar."
+        };
+
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            document.getElementById('ai-chat-window').classList.toggle('active', chatOpen);
+            document.getElementById('chat-trigger').style.display = chatOpen ? 'none' : 'flex';
+        }
+
+        function appendMessage(text, isUser = false) {
+            const container = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            msg.className = isUser 
+                ? "bg-ocre/10 border border-ocre/20 p-3 rounded-lg rounded-tr-none text-[13px] text-burdeos self-end ml-8 shadow-sm font-light"
+                : "bg-white p-3 rounded-lg rounded-tl-none shadow-sm text-[13px] border border-crema text-burdeos italic leading-relaxed self-start mr-8";
+            msg.innerText = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function callGemini(query) {
+            const systemPrompt = `Eres el anfitrión de 'Casa Gallego' en Empuriabrava. 
+            TONO: Humano, respetuoso, poético, acogedor y NADA robótico. Habla como alguien que ama el mar y la cocina.
+            IDIOIMA: Responde en el MISMO IDIOMA que te hablen (Català, Español, Français, English...).
+            REGLAS DE ORO:
+            1. RESERVAS: Si te piden reserva, mesa o similar, di SIEMPRE: "Llama al 972 45 46 47 para reservar tu plaza".
+            2. UBICACIÓN: Estamos en el Sector Club Náutico, Empuriabrava.
+            3. PRODUCTO: El pescado es de Roses, seleccionado con mimo por expertos.
+            4. HORARIOS: ${INFO_RESTAURANTE.horario}.
+            5. DUDAS: Resuelve cualquier duda de la carta o del lugar con elegancia.
+            No uses listas numeradas en las respuestas, usa párrafos fluidos y bellos.`;
+            
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: query }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+                const data = await response.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Perdona, el viento me ha despistado. ¿Me lo repites?";
+            } catch (e) {
+                return "Por favor, llámanos al 972 45 46 47 para que podamos atenderte personalmente.";
+            }
+        }
+
+        async function handleSend() {
+            const input = document.getElementById('chat-input');
+            const val = input.value.trim();
+            if (!val) return;
+
+            appendMessage(val, true);
+            input.value = "";
+            document.getElementById('typing-indicator').classList.remove('hidden');
+
+            const reply = await callGemini(val);
+            document.getElementById('typing-indicator').classList.add('hidden');
+            appendMessage(reply);
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) nav.classList.add('nav-scrolled');
+            else nav.classList.remove('nav-scrolled');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('reveal-visible'); });
+        });
+        document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
+
+        document.getElementById('chat-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+    </script>
+</body>
+</html>
